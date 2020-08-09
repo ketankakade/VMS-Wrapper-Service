@@ -120,17 +120,14 @@ public class WrapperController {
 					params);
 			if (userToBeDeleted.getData() == null) {
 				genericResponse.setMessage("Delete visitor Fails");
-				// return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
 				return ResponseEntity.status(genericResponse.getMessageCode()).body(genericResponse);
 			} else {
 				restTemplate.delete(url, params);
 				genericResponse.setMessage("Delete visitor success");
 				genericResponse.setMessageCode(HttpStatus.OK.value());
-				log.info("in else...");
 				return ResponseEntity.status(genericResponse.getMessageCode()).body(genericResponse);
 			}
 		} catch (Exception e) {
-			log.info("in catch...");
 			log.error(e.getMessage());
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
 		}
