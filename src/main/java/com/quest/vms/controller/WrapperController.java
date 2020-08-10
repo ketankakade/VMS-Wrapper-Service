@@ -10,7 +10,6 @@ import static com.quest.vms.common.utils.VmsConstants.WRAPPER_URL_PATH;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -21,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestTemplate;
 
 import com.quest.vms.common.utils.GenericResponse;
 import com.quest.vms.dto.VisitorDTO;
@@ -67,12 +65,12 @@ public class WrapperController {
 	@ApiOperation(value = "Get All visistors from system")
 	@GetMapping(LIST_VISITOR)
 	public ResponseEntity<GenericResponse<VisitorDTO>> listVisitors(
-			@RequestParam(value = "pageNo", defaultValue = "0", required = false) String pageNo,
-			@RequestParam(value = "pageSize", defaultValue = "10", required = false) String pageSize,
+			@RequestParam(value = "index", defaultValue = "0", required = false) String index,
+			@RequestParam(value = "size", defaultValue = "10", required = false) String size,
 			@RequestParam(value = "sortBy", defaultValue = "firstName", required = false) String sort) {
 		log.info("list visitor");
 		try {
-			GenericResponse<VisitorDTO> listVisitorGenericRes = wrapperService.listVisitors(pageNo, pageSize, sort);
+			GenericResponse<VisitorDTO> listVisitorGenericRes = wrapperService.listVisitors(index, size, sort);
 			return ResponseEntity.status(listVisitorGenericRes.getMessageCode()).body(listVisitorGenericRes);
 		} catch (Exception e) {
 			log.error(e.getMessage());

@@ -51,11 +51,11 @@ public class WrapperServiceImpl implements WrapperService {
 	}
 
 	@Override
-	public GenericResponse<VisitorDTO> listVisitors(final String pageNo, final String pageSize, final String sortBy) {
+	public GenericResponse<VisitorDTO> listVisitors(final String index, final String size, final String sortBy) {
 		Map<String, String> params = new HashMap<>();
-		params.put("pageNo", pageNo);
-		params.put("pageSize", pageSize);
-		params.put("sort", sortBy);
+		params.put("index", index);
+		params.put("size", size);
+		params.put("sortBy", sortBy);
 		@SuppressWarnings("unchecked")
 		GenericResponse<VisitorDTO> listVisitorGenericRes = restTemplate.getForObject(listVisitorsUrl, GenericResponse.class,
 				params);
