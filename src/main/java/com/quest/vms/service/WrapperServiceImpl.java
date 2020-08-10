@@ -73,7 +73,7 @@ public class WrapperServiceImpl implements WrapperService {
 		} else {
 			restTemplate.delete(deleteVisitorUrl, params);
 			userToBeDeleted.setMessage("Delete visitor success");
-			userToBeDeleted.setMessageCode(HttpStatus.OK.value());
+			userToBeDeleted.setStatusCode(HttpStatus.OK.value());
 		}
 		return userToBeDeleted;
 	}

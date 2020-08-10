@@ -1,11 +1,8 @@
 package com.quest.vms.controller;
 
-import static com.quest.vms.common.utils.VmsConstants.CREATE_VISITOR;
-import static com.quest.vms.common.utils.VmsConstants.DELETE_VISITOR;
-import static com.quest.vms.common.utils.VmsConstants.GET_VISITOR;
+import static com.quest.vms.common.utils.VmsConstants.VISITOR;
 import static com.quest.vms.common.utils.VmsConstants.ID;
-import static com.quest.vms.common.utils.VmsConstants.LIST_VISITOR;
-import static com.quest.vms.common.utils.VmsConstants.WRAPPER_URL_PATH;
+import static com.quest.vms.common.utils.VmsConstants.GATEWAY_URL_PATH;
 
 import javax.validation.Valid;
 
@@ -30,7 +27,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
-@RequestMapping("/" + WRAPPER_URL_PATH)
+@RequestMapping("/" + GATEWAY_URL_PATH)
 @Api(value = "Visitor Management System", description = "Operations pertaining to Visitor Management System")
 @Slf4j
 public class WrapperController {
@@ -39,11 +36,11 @@ public class WrapperController {
 	private WrapperService wrapperService;
 
 	@ApiOperation(value = "Add a Visitor to system")
-	@PostMapping(CREATE_VISITOR)
+	@PostMapping(VISITOR)
 	public ResponseEntity<GenericResponse<VisitorDTO>> addVisitor(@Valid @RequestBody VisitorDTO visitor) {
 		try {
 			GenericResponse<VisitorDTO> createVisitorGenericRes = wrapperService.addVisitor(visitor);
-			return ResponseEntity.status(createVisitorGenericRes.getMessageCode()).body(createVisitorGenericRes);
+			return ResponseEntity.status(createVisitorGenericRes.getStatusCode()).body(createVisitorGenericRes);
 		} catch (Exception e) {
 			log.error(e.getMessage());
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
@@ -51,11 +48,11 @@ public class WrapperController {
 	}
 
 	@ApiOperation(value = "Get User by Id")
-	@GetMapping(GET_VISITOR + "/{" + ID + "}")
+	@GetMapping(VISITOR + "/{" + ID + "}")
 	public ResponseEntity<GenericResponse<VisitorDTO>> getVisitorById(@PathVariable(value = ID) Integer id) {
 		try {
 			GenericResponse<VisitorDTO> getVisitorGenericRes = wrapperService.getVisitorById(id);
-			return ResponseEntity.status(getVisitorGenericRes.getMessageCode()).body(getVisitorGenericRes);
+			return ResponseEntity.status(getVisitorGenericRes.getStatusCode()).body(getVisitorGenericRes);
 		} catch (Exception e) {
 			log.error(e.getMessage());
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
@@ -63,7 +60,7 @@ public class WrapperController {
 	}
 
 	@ApiOperation(value = "Get All visistors from system")
-	@GetMapping(LIST_VISITOR)
+	@GetMapping(VISITOR)
 	public ResponseEntity<GenericResponse<VisitorDTO>> listVisitors(
 			@RequestParam(value = "index", defaultValue = "0", required = false) String index,
 			@RequestParam(value = "size", defaultValue = "10", required = false) String size,
@@ -71,7 +68,7 @@ public class WrapperController {
 		log.info("list visitor");
 		try {
 			GenericResponse<VisitorDTO> listVisitorGenericRes = wrapperService.listVisitors(index, size, sort);
-			return ResponseEntity.status(listVisitorGenericRes.getMessageCode()).body(listVisitorGenericRes);
+			return ResponseEntity.status(listVisitorGenericRes.getStatusCode()).body(listVisitorGenericRes);
 		} catch (Exception e) {
 			log.error(e.getMessage());
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
@@ -79,11 +76,11 @@ public class WrapperController {
 	}
 
 	@ApiOperation(value = "Delete Visitor from system")
-	@DeleteMapping(DELETE_VISITOR + "/{id}")
+	@DeleteMapping(VISITOR + "/{id}")
 	public ResponseEntity<GenericResponse<?>> deleteVisitor(@PathVariable(value = "id") Integer visitorId) {
 		try {
 			GenericResponse<?> userToBeDeleted = wrapperService.deleteVisitor(visitorId);
-			return ResponseEntity.status(userToBeDeleted.getMessageCode()).body(userToBeDeleted);
+			return ResponseEntity.status(userToBeDeleted.getStatusCode()).body(userToBeDeleted);
 		} catch (Exception e) {
 			log.error(e.getMessage());
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
