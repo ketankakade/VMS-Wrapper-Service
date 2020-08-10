@@ -69,7 +69,7 @@ public class WrapperController {
 	public ResponseEntity<GenericResponse<VisitorDTO>> listVisitors(
 			@RequestParam(value = "pageNo", defaultValue = "0", required = false) String pageNo,
 			@RequestParam(value = "pageSize", defaultValue = "10", required = false) String pageSize,
-			@RequestParam(value = "sort", defaultValue = "firstName", required = false) String sort) {
+			@RequestParam(value = "sortBy", defaultValue = "firstName", required = false) String sort) {
 		log.info("list visitor");
 		try {
 			GenericResponse<VisitorDTO> listVisitorGenericRes = wrapperService.listVisitors(pageNo, pageSize, sort);
