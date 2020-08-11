@@ -4,6 +4,7 @@ import static com.quest.vms.common.utils.VmsConstants.GATEWAY_URL_PATH;
 import static com.quest.vms.common.utils.VmsConstants.ID;
 import static com.quest.vms.common.utils.VmsConstants.VISITOR;
 
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -36,7 +37,7 @@ public class GatewayController {
 
 	@ApiOperation(value = "Add a Visitor to system")
 	@PostMapping(VISITOR)
-	public ResponseEntity<GenericResponse<VisitorDTO>> addVisitor( @RequestBody VisitorDTO visitor) {
+	public ResponseEntity<GenericResponse<VisitorDTO>> addVisitor(@Valid @RequestBody VisitorDTO visitor) {
 		try {
 			GenericResponse<VisitorDTO> createVisitorGenericRes = gatewayService.addVisitor(visitor);
 			return ResponseEntity.status(createVisitorGenericRes.getStatusCode()).body(createVisitorGenericRes);
