@@ -51,11 +51,12 @@ public class GatewayServiceImpl implements GatewayService {
 	}
 
 	@Override
-	public GenericResponse<VisitorDTO> listVisitors(final String index, final String size, final String sortBy) {
+	public GenericResponse<VisitorDTO> listVisitors(final String index, final String size, final String sortBy, final String orderBy) {
 		Map<String, String> params = new HashMap<>();
 		params.put("index", index);
 		params.put("size", size);
 		params.put("sortBy", sortBy);
+		params.put("orderBy", orderBy);
 		@SuppressWarnings("unchecked")
 		GenericResponse<VisitorDTO> listVisitorGenericRes = restTemplate.getForObject(listVisitorsUrl, GenericResponse.class,
 				params);

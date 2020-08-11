@@ -1,10 +1,9 @@
 package com.quest.vms.controller;
 
-import static com.quest.vms.common.utils.VmsConstants.VISITOR;
-import static com.quest.vms.common.utils.VmsConstants.ID;
 import static com.quest.vms.common.utils.VmsConstants.GATEWAY_URL_PATH;
+import static com.quest.vms.common.utils.VmsConstants.ID;
+import static com.quest.vms.common.utils.VmsConstants.VISITOR;
 
-import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -37,7 +36,7 @@ public class GatewayController {
 
 	@ApiOperation(value = "Add a Visitor to system")
 	@PostMapping(VISITOR)
-	public ResponseEntity<GenericResponse<VisitorDTO>> addVisitor(@Valid @RequestBody VisitorDTO visitor) {
+	public ResponseEntity<GenericResponse<VisitorDTO>> addVisitor( @RequestBody VisitorDTO visitor) {
 		try {
 			GenericResponse<VisitorDTO> createVisitorGenericRes = gatewayService.addVisitor(visitor);
 			return ResponseEntity.status(createVisitorGenericRes.getStatusCode()).body(createVisitorGenericRes);
@@ -64,10 +63,12 @@ public class GatewayController {
 	public ResponseEntity<GenericResponse<VisitorDTO>> listVisitors(
 			@RequestParam(value = "index", defaultValue = "0", required = false) String index,
 			@RequestParam(value = "size", defaultValue = "10", required = false) String size,
-			@RequestParam(value = "sortBy", defaultValue = "firstName", required = false) String sort) {
+			@RequestParam(value = "sortBy", defaultValue = "firstName", required = false) String sort,
+			@RequestParam(value = "orderBy", defaultValue = "ASC", required = false) String orderBy) {
+
 		log.info("list visitor");
 		try {
-			GenericResponse<VisitorDTO> listVisitorGenericRes = gatewayService.listVisitors(index, size, sort);
+			GenericResponse<VisitorDTO> listVisitorGenericRes = gatewayService.listVisitors(index, size, sort, orderBy);
 			return ResponseEntity.status(listVisitorGenericRes.getStatusCode()).body(listVisitorGenericRes);
 		} catch (Exception e) {
 			log.error(e.getMessage());
