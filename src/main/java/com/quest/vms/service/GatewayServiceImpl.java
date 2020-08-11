@@ -25,6 +25,9 @@ public class GatewayServiceImpl implements GatewayService {
 	
 	@Value("${deleteVisitorUrl}")
 	String deleteVisitorUrl;
+	
+	@Value("${updateVisitorUrl}")
+	String updateVisitorUrl;
 
 	private RestTemplate restTemplate;
 
@@ -79,4 +82,16 @@ public class GatewayServiceImpl implements GatewayService {
 		return userToBeDeleted;
 	}
 
+	@Override
+	public GenericResponse<VisitorDTO> updateVisitor(final VisitorDTO visitorDto) {
+		Map<String, Integer> params = new HashMap<>();
+		params.put("id", visitorDto.getVisitorId());
+		GenericResponse<VisitorDTO> updatedVisitor = restTemplate.getForObject(getVisitorUrl, GenericResponse.class, params);
+		if(updatedVisitor.getData() ==  null) {
+			updatedVisitor.setMessage("visitor not found");
+		}else {
+		restTemplate.put(updateVisitorUrl, visitorDto);
+		}
+		return updatedVisitor;
+	}
 }

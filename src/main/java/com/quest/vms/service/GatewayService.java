@@ -12,4 +12,6 @@ public interface GatewayService {
 	public GenericResponse<?> deleteVisitor(Integer id);
 
 	public GenericResponse<VisitorDTO> listVisitors(final String pageNo, final String pageSize, final String sortBy, final String orderBy);
+
+	public GenericResponse<VisitorDTO> updateVisitor(VisitorDTO visitor);
 }

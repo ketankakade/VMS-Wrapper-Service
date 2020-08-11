@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -83,6 +84,19 @@ public class GatewayController {
 		try {
 			GenericResponse<?> userToBeDeleted = gatewayService.deleteVisitor(visitorId);
 			return ResponseEntity.status(userToBeDeleted.getStatusCode()).body(userToBeDeleted);
+		} catch (Exception e) {
+			log.error(e.getMessage());
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+		}
+	}
+
+	@ApiOperation(value = "Update Visitor details")
+	@PutMapping(VISITOR)
+	public ResponseEntity<GenericResponse<VisitorDTO>> updateVisitor(@RequestBody VisitorDTO visitor) {
+		try {
+			GenericResponse<VisitorDTO> updateVisitorGenericResponse = gatewayService.updateVisitor(visitor);
+			return ResponseEntity.status(updateVisitorGenericResponse.getStatusCode())
+					.body(updateVisitorGenericResponse);
 		} catch (Exception e) {
 			log.error(e.getMessage());
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
