@@ -1,0 +1,16 @@
+D:\VMS_Microservices\Wrapper\VMS-Wrapper-Service\src\main\java\com\quest\vms\exception\InternalServerError.java
+D:\VMS_Microservices\Wrapper\VMS-Wrapper-Service\src\main\java\com\quest\vms\service\GatewayServiceImpl.java
+D:\VMS_Microservices\Wrapper\VMS-Wrapper-Service\src\main\java\com\quest\vms\exception\ServiceException.java
+D:\VMS_Microservices\Wrapper\VMS-Wrapper-Service\src\main\java\com\quest\vms\VmsWrapperApplication.java
+D:\VMS_Microservices\Wrapper\VMS-Wrapper-Service\src\main\java\com\quest\vms\controller\GatewayController.java
+D:\VMS_Microservices\Wrapper\VMS-Wrapper-Service\src\main\java\com\quest\vms\dto\DeviceDTO.java
+D:\VMS_Microservices\Wrapper\VMS-Wrapper-Service\src\main\java\com\quest\vms\swaggerConfig\Swagger2Config.java
+D:\VMS_Microservices\Wrapper\VMS-Wrapper-Service\src\main\java\com\quest\vms\common\utils\ErrorCodes.java
+D:\VMS_Microservices\Wrapper\VMS-Wrapper-Service\src\main\java\com\quest\vms\common\utils\GenericResponse.java
+D:\VMS_Microservices\Wrapper\VMS-Wrapper-Service\src\main\java\com\quest\vms\dto\VisitDTO.java
+D:\VMS_Microservices\Wrapper\VMS-Wrapper-Service\src\main\java\com\quest\vms\dto\TimeSlotDTO.java
+D:\VMS_Microservices\Wrapper\VMS-Wrapper-Service\src\main\java\com\quest\vms\dto\VisitorDTO.java
+D:\VMS_Microservices\Wrapper\VMS-Wrapper-Service\src\main\java\com\quest\vms\dto\ContactPersonDTO.java
+D:\VMS_Microservices\Wrapper\VMS-Wrapper-Service\src\main\java\com\quest\vms\service\GatewayService.java
+D:\VMS_Microservices\Wrapper\VMS-Wrapper-Service\src\main\java\com\quest\vms\common\utils\VmsConstants.java
+D:\VMS_Microservices\Wrapper\VMS-Wrapper-Service\src\main\java\com\quest\vms\exception\RestExceptionHandler.java
