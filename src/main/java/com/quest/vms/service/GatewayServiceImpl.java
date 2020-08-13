@@ -10,6 +10,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.quest.vms.common.utils.GenericResponse;
 import com.quest.vms.dto.VisitorDTO;
+import com.quest.vms.dto.VisitorsCountDTO;
 
 @Service
 public class GatewayServiceImpl implements GatewayService {
@@ -22,6 +23,9 @@ public class GatewayServiceImpl implements GatewayService {
 	
 	@Value("${listVisitorsUrl}")
 	String listVisitorsUrl;
+	
+	@Value("${visitorsCountUrl}")
+	String visitorsCountUrl;
 	
 	@Value("${deleteVisitorUrl}")
 	String deleteVisitorUrl;
@@ -65,6 +69,14 @@ public class GatewayServiceImpl implements GatewayService {
 				params);
 		return listVisitorGenericRes;
 	}
+	
+	@Override
+	public GenericResponse<VisitorsCountDTO> visitorsCount() {
+		@SuppressWarnings("unchecked")
+		GenericResponse<VisitorsCountDTO> visitorCountGenericRes = restTemplate.getForObject(visitorsCountUrl, GenericResponse.class);
+		return visitorCountGenericRes;
+	}
+
 
 	@Override
 	public GenericResponse<?> deleteVisitor(Integer visitorId) {
