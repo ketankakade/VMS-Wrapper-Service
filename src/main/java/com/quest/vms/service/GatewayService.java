@@ -17,4 +17,7 @@ public interface GatewayService {
 	public GenericResponse<VisitorsCountDTO> visitorsCount();
 
 	public GenericResponse<VisitorDTO> updateVisitor(VisitorDTO visitor);
+	
+	public GenericResponse<VisitorDTO> searchVisitor(String visitorType, String startDate, String endDate,
+			String visitorName, String contactPersonName, String isActive);
 }

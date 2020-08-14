@@ -15,23 +15,26 @@ import com.quest.vms.dto.VisitorsCountDTO;
 @Service
 public class GatewayServiceImpl implements GatewayService {
 
-	@Value("${endpoint}")
-	String endpoint;
-	
+	@Value("${addVisitorUrl}")
+	String addVisitorUrl;
+
 	@Value("${getVisitorUrl}")
 	String getVisitorUrl;
-	
+
 	@Value("${listVisitorsUrl}")
 	String listVisitorsUrl;
-	
+
 	@Value("${visitorsCountUrl}")
 	String visitorsCountUrl;
-	
+
 	@Value("${deleteVisitorUrl}")
 	String deleteVisitorUrl;
-	
+
 	@Value("${updateVisitorUrl}")
 	String updateVisitorUrl;
+
+	@Value("${filterListVisitor}")
+	String filterListVisitor;
 
 	private RestTemplate restTemplate;
 
@@ -42,7 +45,7 @@ public class GatewayServiceImpl implements GatewayService {
 	@Override
 	public GenericResponse<VisitorDTO> addVisitor(final VisitorDTO visitorDto) {
 		@SuppressWarnings("unchecked")
-		GenericResponse<VisitorDTO> createVisitorGenericRes = restTemplate.postForObject(endpoint, visitorDto,
+		GenericResponse<VisitorDTO> createVisitorGenericRes = restTemplate.postForObject(addVisitorUrl, visitorDto,
 				GenericResponse.class);
 		return createVisitorGenericRes;
 	}
@@ -52,38 +55,40 @@ public class GatewayServiceImpl implements GatewayService {
 		Map<String, Integer> params = new HashMap<>();
 		params.put("id", visitorId);
 		@SuppressWarnings("unchecked")
-		GenericResponse<VisitorDTO> getVisitorGenericRes = restTemplate.getForObject(getVisitorUrl, GenericResponse.class,
-				params);
+		GenericResponse<VisitorDTO> getVisitorGenericRes = restTemplate.getForObject(getVisitorUrl,
+				GenericResponse.class, params);
 		return getVisitorGenericRes;
 	}
 
 	@Override
-	public GenericResponse<VisitorDTO> listVisitors(final String index, final String size, final String sortBy, final String orderBy) {
+	public GenericResponse<VisitorDTO> listVisitors(final String index, final String size, final String sortBy,
+			final String orderBy) {
 		Map<String, String> params = new HashMap<>();
 		params.put("index", index);
 		params.put("size", size);
 		params.put("sortBy", sortBy);
 		params.put("orderBy", orderBy);
 		@SuppressWarnings("unchecked")
-		GenericResponse<VisitorDTO> listVisitorGenericRes = restTemplate.getForObject(listVisitorsUrl, GenericResponse.class,
-				params);
+		GenericResponse<VisitorDTO> listVisitorGenericRes = restTemplate.getForObject(listVisitorsUrl,
+				GenericResponse.class, params);
 		return listVisitorGenericRes;
 	}
-	
+
 	@Override
 	public GenericResponse<VisitorsCountDTO> visitorsCount() {
 		@SuppressWarnings("unchecked")
-		GenericResponse<VisitorsCountDTO> visitorCountGenericRes = restTemplate.getForObject(visitorsCountUrl, GenericResponse.class);
+		GenericResponse<VisitorsCountDTO> visitorCountGenericRes = restTemplate.getForObject(visitorsCountUrl,
+				GenericResponse.class);
 		return visitorCountGenericRes;
 	}
-
 
 	@Override
 	public GenericResponse<?> deleteVisitor(Integer visitorId) {
 		Map<String, Integer> params = new HashMap<>();
 		params.put("id", visitorId);
 		@SuppressWarnings("unchecked")
-		GenericResponse<VisitorDTO> userToBeDeleted = restTemplate.getForObject(getVisitorUrl, GenericResponse.class, params);
+		GenericResponse<VisitorDTO> userToBeDeleted = restTemplate.getForObject(getVisitorUrl, GenericResponse.class,
+				params);
 		if (userToBeDeleted.getData() == null) {
 			userToBeDeleted.setMessage("Delete visitor Fails");
 		} else {
@@ -98,12 +103,32 @@ public class GatewayServiceImpl implements GatewayService {
 	public GenericResponse<VisitorDTO> updateVisitor(final VisitorDTO visitorDto) {
 		Map<String, Integer> params = new HashMap<>();
 		params.put("id", visitorDto.getVisitorId());
-		GenericResponse<VisitorDTO> updatedVisitor = restTemplate.getForObject(getVisitorUrl, GenericResponse.class, params);
-		if(updatedVisitor.getData() ==  null) {
+		@SuppressWarnings("unchecked")
+		GenericResponse<VisitorDTO> updatedVisitor = restTemplate.getForObject(getVisitorUrl, GenericResponse.class,
+				params);
+		if (updatedVisitor.getData() == null) {
 			updatedVisitor.setMessage("visitor not found");
-		}else {
-		restTemplate.put(updateVisitorUrl, visitorDto);
+		} else {
+			restTemplate.put(updateVisitorUrl, visitorDto);
 		}
 		return updatedVisitor;
 	}
+
+	@Override
+	public GenericResponse<VisitorDTO> searchVisitor(String visitorType, String startDate, String endDate,
+			String visitorName, String contactPersonName, String isActive) {
+		// TODO Auto-generated method stub
+		Map<String, String> params = new HashMap<>();
+		params.put("visitorType", visitorType);
+		params.put("startDate", startDate);
+		params.put("endDate", endDate);
+		params.put("contactPersonName", contactPersonName);
+		params.put("visitorName", visitorName);
+		params.put("isActive", isActive);
+		@SuppressWarnings("unchecked")
+		GenericResponse<VisitorDTO> listVisitorGenericRes = restTemplate.getForObject(filterListVisitor,
+				GenericResponse.class, params);
+		return listVisitorGenericRes;
+	}
+
 }

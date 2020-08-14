@@ -119,5 +119,28 @@ public class GatewayController {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
 		}
 	}
+	
+	@ApiOperation(value = "Get All visistors from system")
+	@GetMapping("listVisitor")
+	public ResponseEntity<GenericResponse<VisitorDTO>> searchVisitor(
+			// approved or not
+			@RequestParam(value = "visitType", defaultValue = "ALL", required = false) String visitorType,
+			// if not specified, default is today's date
+			@RequestParam(value = "startDate", required = false) String startDate,
+			@RequestParam(value = "endDate", required = false) String endDate,
+			// visitor name
+			@RequestParam(value = "visitorName", required = false) String visitorName,
+			// get all visitor by contact person name
+			@RequestParam(value = "contactPersonName", required = false) String contactPersonName,
+			@RequestParam(value = "isActive", required = false) String isActive) {
+		log.info("list visitor");
+		try {
+			GenericResponse<VisitorDTO> listVisitorGenericRes = gatewayService.searchVisitor(visitorType, startDate, endDate, visitorName, contactPersonName, isActive);
+			return ResponseEntity.status(listVisitorGenericRes.getStatusCode()).body(listVisitorGenericRes);
+		} catch (Exception e) {
+			log.error(e.getMessage());
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+		}
+	}
 
 }
