@@ -1,6 +1,7 @@
 package com.quest.vms.service;
 
 import com.quest.vms.common.utils.GenericResponse;
+import com.quest.vms.dto.OtpDTO;
 import com.quest.vms.dto.VisitorDTO;
 import com.quest.vms.dto.VisitorsCountDTO;
 
@@ -20,4 +21,6 @@ public interface GatewayService {
 	
 	public GenericResponse<VisitorDTO> searchVisitor(String visitorType, String startDate, String endDate,
 			String visitorName, String contactPersonName, String isActive);
+	
+	public GenericResponse<OtpDTO> generateOtp(final OtpDTO otpDto);
 }

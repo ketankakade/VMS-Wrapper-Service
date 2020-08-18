@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.quest.vms.common.utils.GenericResponse;
+import com.quest.vms.dto.OtpDTO;
 import com.quest.vms.dto.VisitorDTO;
 import com.quest.vms.dto.VisitorsCountDTO;
 import com.quest.vms.service.GatewayService;
@@ -35,6 +36,9 @@ import lombok.extern.slf4j.Slf4j;
 public class GatewayController {
 
 	private static final String VISITORCOUNT = "/visitorscount";
+
+	private static final String VISITOR_OTP = "/visitor-otp";
+
 	@Autowired
 	private GatewayService gatewayService;
 
@@ -82,8 +86,7 @@ public class GatewayController {
 
 	@ApiOperation(value = "Get visitors count to display on dashboard")
 	@GetMapping(VISITORCOUNT)
-	public ResponseEntity<GenericResponse<VisitorsCountDTO>> getVisitorsCount()
-			{
+	public ResponseEntity<GenericResponse<VisitorsCountDTO>> getVisitorsCount() {
 		log.info("list visitor count");
 		try {
 			GenericResponse<VisitorsCountDTO> listVisitorGenericRes = gatewayService.visitorsCount();
@@ -94,7 +97,6 @@ public class GatewayController {
 		}
 	}
 
-	
 	@ApiOperation(value = "Delete Visitor from system")
 	@DeleteMapping(VISITOR + "/{id}")
 	public ResponseEntity<GenericResponse<?>> deleteVisitor(@PathVariable(value = "id") Integer visitorId) {
@@ -119,7 +121,7 @@ public class GatewayController {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
 		}
 	}
-	
+
 	@ApiOperation(value = "Get All visistors from system")
 	@GetMapping("/listVisitor")
 	public ResponseEntity<GenericResponse<VisitorDTO>> searchVisitor(
@@ -135,8 +137,22 @@ public class GatewayController {
 			@RequestParam(value = "isActive", required = false) String isActive) {
 		log.info("list visitor");
 		try {
-			GenericResponse<VisitorDTO> listVisitorGenericRes = gatewayService.searchVisitor(visitorType, startDate, endDate, visitorName, contactPersonName, isActive);
+			GenericResponse<VisitorDTO> listVisitorGenericRes = gatewayService.searchVisitor(visitorType, startDate,
+					endDate, visitorName, contactPersonName, isActive);
 			return ResponseEntity.status(listVisitorGenericRes.getStatusCode()).body(listVisitorGenericRes);
+		} catch (Exception e) {
+			log.error(e.getMessage());
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+		}
+	}
+
+	@ApiOperation(value = "Call Email Service to generate an OTP")
+	@PostMapping(VISITOR_OTP)
+	public ResponseEntity<GenericResponse<OtpDTO>> generateOTP(@Valid @RequestBody OtpDTO otpDTO) {
+		log.info("sd" + otpDTO.getEmail());
+		try {
+			GenericResponse<OtpDTO> generateOtpGenericRes = gatewayService.generateOtp(otpDTO);
+			return ResponseEntity.status(generateOtpGenericRes.getStatusCode()).body(generateOtpGenericRes);
 		} catch (Exception e) {
 			log.error(e.getMessage());
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);

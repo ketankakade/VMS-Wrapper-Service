@@ -9,9 +9,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import com.quest.vms.common.utils.GenericResponse;
+import com.quest.vms.dto.OtpDTO;
 import com.quest.vms.dto.VisitorDTO;
 import com.quest.vms.dto.VisitorsCountDTO;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 public class GatewayServiceImpl implements GatewayService {
 
@@ -35,6 +39,13 @@ public class GatewayServiceImpl implements GatewayService {
 
 	@Value("${filterListVisitor}")
 	String filterListVisitor;
+	
+	@Value("${generateOtpUrl}")
+	String generateOtpUrl;
+	
+	@Value("${generateEmailOtpUrl}")
+	String generateEmailOtpUrl;
+	
 
 	private RestTemplate restTemplate;
 
@@ -129,6 +140,29 @@ public class GatewayServiceImpl implements GatewayService {
 		GenericResponse<VisitorDTO> listVisitorGenericRes = restTemplate.getForObject(filterListVisitor,
 				GenericResponse.class, params);
 		return listVisitorGenericRes;
+	}
+	
+	@Override
+	public GenericResponse<OtpDTO> generateOtp(final OtpDTO otpDto) {
+		@SuppressWarnings("unchecked")
+		GenericResponse<OtpDTO> otpGenericRes = restTemplate.postForObject(generateEmailOtpUrl, otpDto,
+				GenericResponse.class);
+		for(OtpDTO o : otpGenericRes.getData()) {
+			o.getOTPNumber();
+			log.info("otp is "+o.getOTPNumber());
+		}
+		otpGenericRes.getData();
+		OtpDTO otpdtoObject = new OtpDTO();
+		otpGenericRes.getData();
+		otpdtoObject.setEmail(otpGenericRes.getData().get(0).getEmail());
+		otpdtoObject.setOTPNumber(otpGenericRes.getData().get(0).getOTPNumber());
+		log.info("Otp from code: " + otpGenericRes.getData().get(0).getOTPNumber());
+		
+		
+		@SuppressWarnings("unchecked")
+		GenericResponse<OtpDTO> otpResult = restTemplate.postForObject(generateOtpUrl, otpdtoObject,
+				GenericResponse.class);
+		return otpResult;
 	}
 
 }
