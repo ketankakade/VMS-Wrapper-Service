@@ -10,6 +10,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.quest.vms.common.utils.GenericResponse;
 import com.quest.vms.dto.OtpDTO;
+import com.quest.vms.dto.ValidateOtpDTO;
 import com.quest.vms.dto.VisitorDTO;
 import com.quest.vms.dto.VisitorsCountDTO;
 
@@ -45,6 +46,9 @@ public class GatewayServiceImpl implements GatewayService {
 	
 	@Value("${generateEmailOtpUrl}")
 	String generateEmailOtpUrl;
+	
+	@Value("${validateOtpUrl}")
+	String validateOtpUrl;
 	
 
 	private RestTemplate restTemplate;
@@ -163,6 +167,13 @@ public class GatewayServiceImpl implements GatewayService {
 		GenericResponse<OtpDTO> otpResult = restTemplate.postForObject(generateOtpUrl, otpdtoObject,
 				GenericResponse.class);
 		return otpResult;
-	}
+	}	
 
+	@Override
+	public GenericResponse<Boolean> validateOtp(ValidateOtpDTO validateOtpDTO) {
+		@SuppressWarnings("unchecked")
+		GenericResponse<Boolean> validateOtpGenericRes = restTemplate.postForObject(validateOtpUrl, validateOtpDTO,
+				GenericResponse.class);
+		return validateOtpGenericRes;
+	}
 }

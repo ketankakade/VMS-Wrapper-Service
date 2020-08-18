@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.quest.vms.common.utils.GenericResponse;
 import com.quest.vms.dto.OtpDTO;
+import com.quest.vms.dto.ValidateOtpDTO;
 import com.quest.vms.dto.VisitorDTO;
 import com.quest.vms.dto.VisitorsCountDTO;
 import com.quest.vms.service.GatewayService;
@@ -38,6 +39,8 @@ public class GatewayController {
 	private static final String VISITORCOUNT = "/visitorscount";
 
 	private static final String VISITOR_OTP = "/visitor-otp";
+	
+	private static final String VALIDATE_OTP = "/validate-otp";
 
 	@Autowired
 	private GatewayService gatewayService;
@@ -153,6 +156,18 @@ public class GatewayController {
 		try {
 			GenericResponse<OtpDTO> generateOtpGenericRes = gatewayService.generateOtp(otpDTO);
 			return ResponseEntity.status(generateOtpGenericRes.getStatusCode()).body(generateOtpGenericRes);
+		} catch (Exception e) {
+			log.error(e.getMessage());
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+		}
+	}
+	
+	@ApiOperation(value = "Validate OTP")
+	@PostMapping(VALIDATE_OTP)
+	public ResponseEntity<GenericResponse<Boolean>> validateOTP(@Valid @RequestBody ValidateOtpDTO validateOtpDTO) {
+		try {
+			GenericResponse<Boolean> validateOtpGenericRes = gatewayService.validateOtp(validateOtpDTO);
+			return ResponseEntity.status(validateOtpGenericRes.getStatusCode()).body(validateOtpGenericRes);
 		} catch (Exception e) {
 			log.error(e.getMessage());
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
