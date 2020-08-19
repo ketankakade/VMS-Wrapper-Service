@@ -69,7 +69,7 @@ public class GatewayController {
 		}
 	}
 
-	@ApiOperation(value = "Get All visistors from system")
+	@ApiOperation(value = "Get All visitors from system")
 	@GetMapping(VISITOR)
 	public ResponseEntity<GenericResponse<VisitorDTO>> listVisitors(
 			@RequestParam(value = "index", defaultValue = "0", required = false) String index,
@@ -125,7 +125,7 @@ public class GatewayController {
 		}
 	}
 
-	@ApiOperation(value = "Get All visistors from system")
+	@ApiOperation(value = "Get filtered visistors from system")
 	@GetMapping("/listVisitor")
 	public ResponseEntity<GenericResponse<VisitorDTO>> searchVisitor(
 			// approved or not
