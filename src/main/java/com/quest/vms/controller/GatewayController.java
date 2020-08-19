@@ -39,7 +39,7 @@ public class GatewayController {
 	private static final String VISITORCOUNT = "/visitorscount";
 
 	private static final String VISITOR_OTP = "/visitor-otp";
-	
+
 	private static final String VALIDATE_OTP = "/validate-otp";
 
 	@Autowired
@@ -151,8 +151,7 @@ public class GatewayController {
 
 	@ApiOperation(value = "Call Email Service to generate an OTP")
 	@PostMapping(VISITOR_OTP)
-	public ResponseEntity<GenericResponse<OtpDTO>> generateOTP(@Valid @RequestBody OtpDTO otpDTO) {
-		log.info("sd" + otpDTO.getEmail());
+	public ResponseEntity<GenericResponse<OtpDTO>> generateOTP(@RequestBody OtpDTO otpDTO) {
 		try {
 			GenericResponse<OtpDTO> generateOtpGenericRes = gatewayService.generateOtp(otpDTO);
 			return ResponseEntity.status(generateOtpGenericRes.getStatusCode()).body(generateOtpGenericRes);
@@ -161,10 +160,10 @@ public class GatewayController {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
 		}
 	}
-	
+
 	@ApiOperation(value = "Validate OTP")
 	@PostMapping(VALIDATE_OTP)
-	public ResponseEntity<GenericResponse<Boolean>> validateOTP(@Valid @RequestBody ValidateOtpDTO validateOtpDTO) {
+	public ResponseEntity<GenericResponse<Boolean>> validateOTP(@RequestBody ValidateOtpDTO validateOtpDTO) {
 		try {
 			GenericResponse<Boolean> validateOtpGenericRes = gatewayService.validateOtp(validateOtpDTO);
 			return ResponseEntity.status(validateOtpGenericRes.getStatusCode()).body(validateOtpGenericRes);

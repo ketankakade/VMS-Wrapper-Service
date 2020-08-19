@@ -26,7 +26,7 @@ import lombok.NoArgsConstructor;
 public class OtpDTO {
 
 	private Integer Id;
-	private Integer OTPNumber;
+	private String otpNumber;
 	
 	@Email(message = "email should be valid")
 	@NotBlank(message = "email cannot be null or empty")

@@ -148,21 +148,12 @@ public class GatewayServiceImpl implements GatewayService {
 	
 	@Override
 	public GenericResponse<OtpDTO> generateOtp(final OtpDTO otpDto) {
-		@SuppressWarnings("unchecked")
-		GenericResponse<OtpDTO> otpGenericRes = restTemplate.postForObject(generateEmailOtpUrl, otpDto,
-				GenericResponse.class);
-		for(OtpDTO o : otpGenericRes.getData()) {
-			o.getOTPNumber();
-			log.info("otp is "+o.getOTPNumber());
-		}
-		otpGenericRes.getData();
+		OtpDTO otpGenericRes = restTemplate.postForObject(generateEmailOtpUrl, otpDto,
+				OtpDTO.class);
 		OtpDTO otpdtoObject = new OtpDTO();
-		otpGenericRes.getData();
-		otpdtoObject.setEmail(otpGenericRes.getData().get(0).getEmail());
-		otpdtoObject.setOTPNumber(otpGenericRes.getData().get(0).getOTPNumber());
-		log.info("Otp from code: " + otpGenericRes.getData().get(0).getOTPNumber());
-		
-		
+		otpdtoObject.setEmail(otpGenericRes.getEmail());
+		otpdtoObject.setOtpNumber(otpGenericRes.getOtpNumber());
+		//log.info("Otp from code: " + otpGenericRes.getOTPNumber());
 		@SuppressWarnings("unchecked")
 		GenericResponse<OtpDTO> otpResult = restTemplate.postForObject(generateOtpUrl, otpdtoObject,
 				GenericResponse.class);
