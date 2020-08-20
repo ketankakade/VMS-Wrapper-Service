@@ -23,6 +23,8 @@ public interface GatewayService {
 	public GenericResponse<VisitorDTO> searchVisitor(String visitorType, String startDate, String endDate,
 			String visitorName, String contactPersonName, String isActive);
 	
+	public GenericResponse<VisitorDTO> listVisitorByApprovalStatus(String approvalStatus);
+	
 	public GenericResponse<OtpDTO> generateOtp(final OtpDTO otpDto);
 	
 	public GenericResponse<Boolean> validateOtp(ValidateOtpDTO validateOtpDTO);

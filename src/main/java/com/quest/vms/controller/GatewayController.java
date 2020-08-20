@@ -149,6 +149,20 @@ public class GatewayController {
 		}
 	}
 
+	@ApiOperation(value = "Get All visitors by approval status")
+	@GetMapping("/listVisitorByApprovalStatus")
+	public GenericResponse<VisitorDTO> listVisitorByApprovalStatus(
+			@RequestParam(value = "approvalStatus") String approvalStatus) {
+		GenericResponse<VisitorDTO> listVisitorByApporvalStatusGenericResponse = null;
+		try {
+			listVisitorByApporvalStatusGenericResponse = gatewayService.listVisitorByApprovalStatus(approvalStatus);
+			return listVisitorByApporvalStatusGenericResponse;
+		} catch (Exception e) {
+			log.error(e.getMessage());
+			return listVisitorByApporvalStatusGenericResponse;
+		}
+	}
+
 	@ApiOperation(value = "Call Email Service to generate an OTP")
 	@PostMapping(VISITOR_OTP)
 	public ResponseEntity<GenericResponse<OtpDTO>> generateOTP(@RequestBody OtpDTO otpDTO) {

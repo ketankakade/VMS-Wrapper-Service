@@ -41,6 +41,9 @@ public class GatewayServiceImpl implements GatewayService {
 	@Value("${filterListVisitor}")
 	String filterListVisitor;
 	
+	@Value("${listVisitorByApprovalStatus}")
+	String listVisitorByApprovalStatus;
+	
 	@Value("${generateOtpUrl}")
 	String generateOtpUrl;
 	
@@ -145,6 +148,18 @@ public class GatewayServiceImpl implements GatewayService {
 				GenericResponse.class, params);
 		return listVisitorGenericRes;
 	}
+	
+	@Override
+	public GenericResponse<VisitorDTO> listVisitorByApprovalStatus(String approvalStatus)
+	{
+		Map<String, String> params = new HashMap<>();
+		params.put("approvalStatus", approvalStatus);
+		@SuppressWarnings("unchecked")
+		GenericResponse<VisitorDTO> listVisitorGenericRes = restTemplate.getForObject(listVisitorByApprovalStatus,
+				GenericResponse.class, params);
+		return listVisitorGenericRes;		
+	}
+	
 	
 	@Override
 	public GenericResponse<OtpDTO> generateOtp(final OtpDTO otpDto) {
