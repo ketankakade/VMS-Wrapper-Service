@@ -23,6 +23,8 @@ public class VisitDTO {
 	private Boolean isVisitCompleted;
 	private String placeOfVisit;
 	private String reasonForVisit;
+	private String cameFrom;
+	private String passNumber;
 	
 	private ContactPersonDTO contactPerson;
 	private TimeSlotDTO timeSlot;
